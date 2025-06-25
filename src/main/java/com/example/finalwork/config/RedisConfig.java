@@ -1,9 +1,10 @@
 package com.example.finalwork.config;
 
-
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature; // 引入此行
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule; // 引入此行
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -20,12 +21,15 @@ public class RedisConfig {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(factory);
 
-        // 使用Jackson2JsonRedisSerializer来序列化和反序列化redis的value值（默认使用JDK的序列化方式）
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
         ObjectMapper om = new ObjectMapper();
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        // 此行在某些Jackson版本中可能需要或不需要，如果遇到问题可以尝试注释掉
-        // om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+
+        // 核心修改：注册 JavaTimeModule
+        om.registerModule(new JavaTimeModule());
+        // 禁用 WRITE_DATES_AS_TIMESTAMPS，将日期序列化为 ISO-8601 字符串格式，而不是时间戳
+        om.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
         jackson2JsonRedisSerializer.setObjectMapper(om);
 
         // String序列化器

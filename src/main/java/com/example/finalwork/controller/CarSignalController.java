@@ -1,7 +1,5 @@
 package com.example.finalwork.controller;
 
-
-
 import com.example.finalwork.entity.CarSignal;
 import com.example.finalwork.service.CarSignalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,9 +47,9 @@ public class CarSignalController {
     }
 
     /**
-     * GET /api/car-signals/{sid}
+     * GET /api/car-signals/query
      * 接口：根据 sid 查询汽车信号
-     * @param sid 信号ID/规则编号
+     * @param sid 信号ID
      * @return 响应实体
      */
     @GetMapping("/query")

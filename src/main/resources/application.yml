@@ -9,19 +9,34 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   data:
     redis:
-      client: jedis  # ???????????? spring.redis.client-type?
+      client: jedis
       host: localhost
       port: 6379
-      password: ${REDIS_PASSWORD:}  # ???????????
+      password: ${REDIS_PASSWORD:}
       database: 0
-      timeout: 10000ms  # ????
+      timeout: 5000ms  # ????
       jedis:
         pool:
           max-active: 8
           max-idle: 8
           min-idle: 0
-          max-wait: -1ms  # -1 ??????
+          max-wait: 10000ms  # -1 ??????
   mybatis:
     mapper-locations: classpath*:mapper/**/*.xml
     configuration:
       map-underscore-to-camel-case: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+
+rocketmq:
+  name-server: localhost:9876
+  producer:
+    group: car_signal_producer_group
+  consumer:
+    group: car_signal_consumer_group
+warn:
+  rocketmq:
+    topic: car_signal_topic

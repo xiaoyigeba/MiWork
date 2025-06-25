@@ -42,13 +42,13 @@ CREATE TABLE car_signal (
 
 -- 插入第一条数据
 INSERT INTO vehicle_info (vid, frame_number, battery_type, total_mileage, battery_health)
-VALUES ('abcdef1234567890', 1, '三元电池', 100, 100);
+VALUES ('abcdef1234567890', 1001, '三元电池', 100, 100);
 -- 插入第二条数据
 INSERT INTO vehicle_info (vid, frame_number, battery_type, total_mileage, battery_health)
-VALUES ('ghijkl1234567891', 2, '铁锂电池', 600, 95);
+VALUES ('ghijkl1234567891', 1002, '铁锂电池', 600, 95);
 -- 插入第三条数据
 INSERT INTO vehicle_info (vid, frame_number, battery_type, total_mileage, battery_health)
-VALUES ('mnopqr1234567892', 3, '三元电池', 300, 98);
+VALUES ('mnopqr1234567892', 1003, '三元电池', 300, 98);
 -- 插入预警规则数据（示例数据，可根据实际情况修改）
 
 
