@@ -1,5 +1,6 @@
 package com.example.finalwork.controller;
 
+import com.alibaba.fastjson2.JSON;
 import com.example.finalwork.dto.SingleWarningRequestItem;
 import com.example.finalwork.dto.WarningResponse;
 import com.example.finalwork.dto.WarningResponsePart;
@@ -74,10 +75,12 @@ public class WarningController {
      * }
      */
     @PostMapping("/calculate")
-    public ResponseEntity<WarningResponse> calculateWarning(@RequestBody List<SingleWarningRequestItem> requestItems) {
+    public ResponseEntity<WarningResponse> calculateWarning(@RequestBody String requestBody) {
         WarningResponse response = new WarningResponse();
-        List<WarningResponsePart> allTriggeredWarnings = new ArrayList<>(); // 收集所有请求项的报警结果
-
+        List<SingleWarningRequestItem> requestItems = JSON.parseArray(requestBody, SingleWarningRequestItem.class);
+//        System.out.println("收到数量：" + requestItems.size() + "条");
+//        System.out.println("收到数据：");
+//        System.out.println(JSON.toJSONString(requestItems));
         // 参数校验
         if (requestItems == null || requestItems.isEmpty()) {
             response.setStatus(HttpStatus.BAD_REQUEST.value());
@@ -85,33 +88,7 @@ public class WarningController {
             response.setParts(new ArrayList<>()); // 返回空列表
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
-
-        for (SingleWarningRequestItem item : requestItems) {
-            if (item == null || item.getFrameNumber() == null || item.getSignalData() == null || item.getSignalData().isEmpty()) {
-                System.err.println("跳过无效的请求项：frameNumber 或 signal 为空。Item: " + item);
-                continue; // Skip current invalid item, process next
-            }
-
-            try {
-                // Call service layer for warning calculation.
-                // It now returns a List<WarningResponsePart>
-                List<WarningResponsePart> triggeredWarningsForItem = warningCalculationService.calculateWarnings(
-                        item.getFrameNumber(),
-                        item.getRuleNumber(), // Can be null
-                        item.getSignalData()
-                );
-
-                // Add triggered warnings for the current item to the total list
-                if (triggeredWarningsForItem != null && !triggeredWarningsForItem.isEmpty()) {
-                    allTriggeredWarnings.addAll(triggeredWarningsForItem);
-                }
-
-            } catch (Exception e) {
-                // Catch exceptions during single request item processing, log, but don't interrupt the whole request
-                System.err.println("处理车架号 " + item.getFrameNumber() + " 的信号时发生异常: " + e.getMessage());
-                e.printStackTrace();
-            }
-        }
+        List<WarningResponsePart> allTriggeredWarnings = warningCalculationService.processMessage(requestItems);
 
         response.setStatus(HttpStatus.OK.value());
         response.setMessage("ok");

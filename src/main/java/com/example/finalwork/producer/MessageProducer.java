@@ -16,10 +16,10 @@ public class MessageProducer {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    @Scheduled(fixedRate = 1000) // 每秒执行一次
-    public void sendMessage() {
-        String message = "Message_" + LocalDateTime.now();
-        rabbitTemplate.convertAndSend(RabbitMQConfig.QUEUE_NAME, message);
-        System.out.println("发送消息: " + message);
-    }
+//    @Scheduled(fixedRate = 1000) // 每秒执行一次
+//    public void sendMessage() {
+//        String message = "Message_" + LocalDateTime.now();
+//        rabbitTemplate.convertAndSend(RabbitMQConfig.QUEUE_NAME, message);
+//        System.out.println("发送消息: " + message);
+//    }
 }

@@ -1,5 +1,6 @@
 package com.example.finalwork.service.impl;
 
+import com.alibaba.fastjson2.JSON;
 import com.example.finalwork.entity.AlarmRule;
 import com.example.finalwork.mapper.AlarmRuleMapper;
 import com.example.finalwork.service.AlarmRuleService;
@@ -35,11 +36,11 @@ public class AlarmRuleServiceImpl implements AlarmRuleService {
         List<AlarmRule> rules = getList(cacheKey);
 
         if (!rules.isEmpty()) {
-            System.out.println("从 Redis 缓存获取预警规则: " + cacheKey);
+//            System.out.println("从 Redis 缓存获取预警规则: " + cacheKey);
             return rules;
         }
 
-        System.out.println("缓存未命中，从数据库查询预警规则: " + cacheKey);
+//        System.out.println("缓存未命中，从数据库查询预警规则: " + cacheKey);
         rules = alarmRuleMapper.findAlarmRulesByBatteryTypeAndOptionalRuleNumber(batteryType, ruleNumber);
         if (!rules.isEmpty()) {
             // 将规则存入 Redis 列表
@@ -67,7 +68,7 @@ public class AlarmRuleServiceImpl implements AlarmRuleService {
             return Collections.emptyList();
         }
         return objectList.stream()
-                .filter(obj -> obj instanceof AlarmRule)
+//                .filter(obj -> obj instanceof AlarmRule)
                 .map(obj -> (AlarmRule) obj)
                 .collect(Collectors.toList());
     }

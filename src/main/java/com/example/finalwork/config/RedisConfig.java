@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
@@ -16,33 +17,23 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfig {
 
     @Bean
-    @SuppressWarnings("all") // 抑制一些编译器警告
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(factory);
 
-        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
-        ObjectMapper om = new ObjectMapper();
-        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        // 使用 GenericJackson2JsonRedisSerializer 来支持任意类型序列化
+        GenericJackson2JsonRedisSerializer genericJackson2JsonRedisSerializer =
+                new GenericJackson2JsonRedisSerializer();
 
-        // 核心修改：注册 JavaTimeModule
-        om.registerModule(new JavaTimeModule());
-        // 禁用 WRITE_DATES_AS_TIMESTAMPS，将日期序列化为 ISO-8601 字符串格式，而不是时间戳
-        om.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        // 设置 key 和 hash key 使用 String 序列化方式
+        template.setKeySerializer(new StringRedisSerializer());
+        template.setHashKeySerializer(new StringRedisSerializer());
 
-        jackson2JsonRedisSerializer.setObjectMapper(om);
+        // 设置 value 和 hash value 使用 GenericJackson2JsonRedisSerializer
+        template.setValueSerializer(genericJackson2JsonRedisSerializer);
+        template.setHashValueSerializer(genericJackson2JsonRedisSerializer);
 
-        // String序列化器
-        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
-
-        // key采用String的序列化方式
-        template.setKeySerializer(stringRedisSerializer);
-        // hash的key也采用String的序列化方式
-        template.setHashKeySerializer(stringRedisSerializer);
-        // value序列化方式采用jackson
-        template.setValueSerializer(jackson2JsonRedisSerializer);
-        // hash的value序列化方式采用jackson
-        template.setHashValueSerializer(jackson2JsonRedisSerializer);
+        // 必须调用这个方法以确保配置生效
         template.afterPropertiesSet();
 
         return template;

@@ -1,5 +1,6 @@
 package com.example.finalwork.service;
 
+import com.example.finalwork.dto.SingleWarningRequestItem;
 import com.example.finalwork.dto.WarningResponsePart;
 import com.example.finalwork.entity.AlarmRule;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -106,5 +107,37 @@ public class WarningCalculationService {
             }
         }
         return triggeredWarnings;
+    }
+
+
+    public List<WarningResponsePart> processMessage(List<SingleWarningRequestItem> requestItems) {
+        List<WarningResponsePart> allTriggeredWarnings = new ArrayList<>();
+        for (SingleWarningRequestItem item : requestItems) {
+            if (item == null || item.getFrameNumber() == null || item.getSignalData() == null || item.getSignalData().isEmpty()) {
+                System.err.println("跳过无效的请求项：frameNumber 或 signal 为空。Item: " + item);
+                continue; // Skip current invalid item, process next
+            }
+
+            try {
+                // Call service layer for warning calculation.
+                // It now returns a List<WarningResponsePart>
+                List<WarningResponsePart> triggeredWarningsForItem = calculateWarnings(
+                        item.getFrameNumber(),
+                        item.getRuleNumber(), // Can be null
+                        item.getSignalData()
+                );
+
+                // Add triggered warnings for the current item to the total list
+                if (triggeredWarningsForItem != null && !triggeredWarningsForItem.isEmpty()) {
+                    allTriggeredWarnings.addAll(triggeredWarningsForItem);
+                }
+
+            } catch (Exception e) {
+                // Catch exceptions during single request item processing, log, but don't interrupt the whole request
+                System.err.println("处理车架号 " + item.getFrameNumber() + " 的信号时发生异常: " + e.getMessage());
+//                e.printStackTrace();
+            }
+        }
+        return allTriggeredWarnings;
     }
 }

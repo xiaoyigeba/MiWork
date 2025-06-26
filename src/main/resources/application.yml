@@ -1,6 +1,18 @@
 server:
   port: 31777
 
+# API 端点
+api:
+  endpoint:
+    url: http://localhost:31777/api/warning/calculate
+
+  # 批量处理配置
+batch:
+  size: 500
+timeout:
+  seconds: 5
+
+
 spring:
   application:
     name : finalwork
@@ -27,6 +39,7 @@ spring:
     configuration:
       map-underscore-to-camel-case: true
   rabbitmq:
+    queue: car-signal-queue
     host: localhost
     port: 5672
     username: guest

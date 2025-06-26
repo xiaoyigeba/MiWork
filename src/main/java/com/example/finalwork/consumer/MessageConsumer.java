@@ -1,11 +1,18 @@
 package com.example.finalwork.consumer;
 
+import com.alibaba.fastjson2.JSON;
 import com.example.finalwork.config.RabbitMQConfig;
+import com.example.finalwork.dto.SingleWarningRequestItem;
+import com.example.finalwork.service.WarningCalculationService;
+import org.json.JSONObject;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -53,13 +60,7 @@ public class MessageConsumer {
 
         // 模拟调用API
         System.out.println("处理批次，大小: " + messagesToProcess.size());
-        callExternalApi(messagesToProcess);
+//        callExternalApi(messagesToProcess);
     }
 
-    private void callExternalApi(List<String> messages) {
-        // 这里是实际调用外部API的代码
-        System.out.println("调用API，发送 " + messages.size() + " 条消息");
-        // 实际项目中可以使用RestTemplate或WebClient来调用API
-        // 示例: restTemplate.postForEntity(apiUrl, messages, Response.class);
-    }
 }
