@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <!-- 样式定义 -->
+  <style>
+    .entity {
+      fill: white;
+      stroke: #333;
+      stroke-width: 2;
+      rx: 5;
+      ry: 5;
+    }
+    .entity-header {
+      fill: #4a6fa5;
+      stroke: #333;
+      stroke-width: 2;
+    }
+    .entity-header-text {
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+      fill: white;
+      text-anchor: middle;
+    }
+    .entity-text {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      fill: #333;
+    }
+    .relationship {
+      stroke: #333;
+      stroke-width: 2;
+      fill: none;
+    }
+    .relationship-label {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      fill: #333;
+      text-anchor: middle;
+    }
+    .cardinality {
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      fill: #333;
+    }
+  </style>
+
+  <!-- 车辆信息表 -->
+  <rect class="entity" x="50" y="50" width="200" height="160" />
+  <rect class="entity-header" x="50" y="50" width="200" height="30" />
+  <text class="entity-header-text" x="150" y="70">vehicle_info</text>
+  <text class="entity-text" x="60" y="100">• vid (PK)</text>
+  <text class="entity-text" x="60" y="120">• frame_number</text>
+  <text class="entity-text" x="60" y="140">• battery_type</text>
+  <text class="entity-text" x="60" y="160">• total_mileage</text>
+  <text class="entity-text" x="60" y="180">• battery_health</text>
+
+  <!-- 规则表 -->
+  <rect class="entity" x="50" y="250" width="200" height="140" />
+  <rect class="entity-header" x="50" y="250" width="200" height="30" />
+  <text class="entity-header-text" x="150" y="270">alarm_rules</text>
+  <text class="entity-text" x="60" y="300">• rid (PK)</text>
+  <text class="entity-text" x="60" y="320">• rule_number (FK)</text>
+  <text class="entity-text" x="60" y="340">• alarm_rule</text>
+  <text class="entity-text" x="60" y="360">• battery_type</text>
+  <text class="entity-text" x="60" y="380">• alarm_level</text>
+
+  <!-- 规则映射表 -->
+  <rect class="entity" x="350" y="250" width="200" height="100" />
+  <rect class="entity-header" x="350" y="250" width="200" height="30" />
+  <text class="entity-header-text" x="450" y="270">rules_mapping</text>
+  <text class="entity-text" x="360" y="300">• rule_number (PK, FK)</text>
+  <text class="entity-text" x="360" y="320">• rule_name</text>
+
+  <!-- 车辆信号表 -->
+  <rect class="entity" x="350" y="50" width="200" height="160" />
+  <rect class="entity-header" x="350" y="50" width="200" height="30" />
+  <text class="entity-header-text" x="450" y="70">car_signal</text>
+  <text class="entity-text" x="360" y="100">• sid (PK)</text>
+  <text class="entity-text" x="360" y="120">• frame_number (FK)</text>
+  <text class="entity-text" x="360" y="140">• Mx</text>
+  <text class="entity-text" x="360" y="160">• Mi</text>
+  <text class="entity-text" x="360" y="180">• Ix</text>
+  <text class="entity-text" x="360" y="200">• Ii</text>
+  <text class="entity-text" x="360" y="220">• time</text>
+
+  <!-- 关系连线 -->
+  <!-- vehicle_info -> car_signal (frame_number) -->
+  <line class="relationship" x1="250" y1="130" x2="350" y2="130" />
+  <text class="cardinality" x="280" y="125">1</text>
+  <text class="cardinality" x="320" y="125">N</text>
+  <text class="relationship-label" x="300" y="110">frame_number</text>
+  
+  <!-- alarm_rules -> rules_mapping (rule_number) -->
+  <line class="relationship" x1="250" y1="320" x2="350" y2="320" />
+  <text class="cardinality" x="280" y="315">N</text>
+  <text class="cardinality" x="320" y="315">1</text>
+  <text class="relationship-label" x="300" y="300">rule_number</text>
+  
+  <!-- vehicle_info -> alarm_rules (battery_type) -->
+  <path class="relationship" d="M 150 210 Q 150 230, 200 230 T 300 230 T 350 250" />
+  <text class="cardinality" x="200" y="220">1</text>
+  <text class="cardinality" x="300" y="240">N</text>
+  <text class="relationship-label" x="250" y="210">battery_type</text>
+</svg>
