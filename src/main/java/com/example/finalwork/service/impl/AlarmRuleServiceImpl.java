@@ -1,6 +1,5 @@
 package com.example.finalwork.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.example.finalwork.entity.AlarmRule;
 import com.example.finalwork.mapper.AlarmRuleMapper;
 import com.example.finalwork.service.AlarmRuleService;
@@ -42,8 +41,6 @@ public class AlarmRuleServiceImpl implements AlarmRuleService {
 
         System.out.println("缓存未命中，从数据库查询预警规则: " + cacheKey);
         rules = alarmRuleMapper.findAlarmRulesByBatteryTypeAndOptionalRuleNumber(batteryType, ruleNumber);
-        System.out.println("--------DB_TEST----------");
-        System.out.println(JSON.toJSON(rules));
         if (!rules.isEmpty()) {
             // 将规则存入 Redis 列表
             redisTemplate.opsForList().rightPushAll(cacheKey, rules.toArray());

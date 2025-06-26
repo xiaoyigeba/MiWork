@@ -35,7 +35,7 @@
 //        List<SingleWarningRequestItem> batchData = new ArrayList<>();
 //        Set<Integer> usedCarIds = new HashSet<>(); // 用于确保 carId 唯一
 //
-//        while (batchData.size() < 3) { // 生成3个不同的 carId
+//        while (batchData.size() < 100) { // 生成3个不同的 carId
 //            int carId = CAR_ID_MIN + random.nextInt(CAR_ID_MAX - CAR_ID_MIN + 1);
 //            if (usedCarIds.add(carId)) { // 确保 carId 不重复
 //                batchData.add(generateSingleWarningRequestItem(carId));
