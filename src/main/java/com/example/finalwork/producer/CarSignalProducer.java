@@ -38,7 +38,7 @@ public class CarSignalProducer {
     /**
      * 每秒钟生成一组电池信号数据并发送到 RabbitMQ。
      */
-    @Scheduled(fixedRate = 300) // 每1000毫秒执行一次
+    @Scheduled(fixedRate = 1000) // 每1000毫秒执行一次
     public void generateAndSendSignalData() {
         // 每批次生成100个不同 carId 的数据
         List<SingleWarningRequestItem> batchData = generateBatchData(100);

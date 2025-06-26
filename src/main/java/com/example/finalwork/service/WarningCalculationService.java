@@ -26,7 +26,6 @@ public class WarningCalculationService {
     private final AlarmRuleService alarmRuleService;
     private final ObjectMapper objectMapper;
     private final RuleMappingService ruleMappingService;
-    private final RedisTemplate<String, Object> redisTemplate;
 
     // Cache compiled Aviator expressions to avoid recompilation and improve performance
     private final Map<String, Expression> compiledExpressionCache = new ConcurrentHashMap<>();
@@ -111,6 +110,8 @@ public class WarningCalculationService {
 
 
     public List<WarningResponsePart> processMessage(List<SingleWarningRequestItem> requestItems) {
+        System.out.println("收到一批告警信息, 正在处理中");
+//        System.out.println("收到数量：" + requestItems.size() + "条");
         List<WarningResponsePart> allTriggeredWarnings = new ArrayList<>();
         for (SingleWarningRequestItem item : requestItems) {
             if (item == null || item.getFrameNumber() == null || item.getSignalData() == null || item.getSignalData().isEmpty()) {
