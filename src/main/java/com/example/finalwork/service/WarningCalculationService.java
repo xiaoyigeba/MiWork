@@ -63,6 +63,7 @@ public class WarningCalculationService {
 
         // 2. 获取预警规则
         List<AlarmRule> rules = alarmRuleService.getAlarmRules(batteryType, ruleNumber);
+        List<String> AlarmRules = rules.stream().map(AlarmRule::getAlarmRule).toList();
         if (rules == null || rules.isEmpty()) {
             System.out.println("未找到电池类型 " + batteryType + (ruleNumber != null ? " 和规则编号 " + ruleNumber : "") + " 的预警规则。");
             warningResponsePart.setData(-2); // 没有匹配的规则，视为不报警

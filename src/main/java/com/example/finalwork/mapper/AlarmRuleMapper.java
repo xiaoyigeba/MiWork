@@ -21,6 +21,18 @@ public interface AlarmRuleMapper {
     List<AlarmRule> findAlarmRulesByBatteryTypeAndOptionalRuleNumber(@Param("batteryType") String batteryType,
                                                                      @Param("ruleNumber") Integer ruleNumber);
 
+    @Select({
+            "<script>",
+            "SELECT alarm_rule FROM alarm_rules",
+            "WHERE battery_type = #{batteryType}",
+            "<if test='ruleNumber != null'>",
+            "AND rule_number = #{ruleNumber}",
+            "</if>",
+            "</script>"
+    })
+    List<AlarmRule> findAlarmRulesByBatteryTypeAndOptionalRuleNumber1(@Param("batteryType") String batteryType,
+                                                                     @Param("ruleNumber") Integer ruleNumber);
+
     // 查询所有规则 (保留，可能有用)
     @Select("SELECT rid, rule_number, name, battery_type, alarm_rule, alarm_level FROM alarm_rules")
     List<AlarmRule> findAllAlarmRules();

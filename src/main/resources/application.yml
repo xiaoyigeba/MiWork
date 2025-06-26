@@ -25,6 +25,14 @@ spring:
     mapper-locations: classpath*:mapper/**/*.xml
     configuration:
       map-underscore-to-camel-case: true
+
+
+  task:
+    scheduling:
+      pool:
+        size: 5
+      enabled: true
+
 management:
   endpoints:
     web:
@@ -34,9 +42,9 @@ management:
 rocketmq:
   name-server: localhost:9876
   producer:
-    group: car_signal_producer_group
+    group: my_battery_signal_producer_group
   consumer:
-    group: car_signal_consumer_group
+    group: my_battery_signal_consumer_group
 warn:
   rocketmq:
-    topic: car_signal_topic
+    topic: battery_signal_topic
