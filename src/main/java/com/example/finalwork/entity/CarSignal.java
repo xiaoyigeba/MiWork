@@ -3,6 +3,7 @@ package com.example.finalwork.entity;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+
 @Data
 public class CarSignal {
 

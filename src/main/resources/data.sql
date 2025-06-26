@@ -13,7 +13,7 @@ CREATE TABLE vehicle_info (
 CREATE TABLE alarm_rules (
                              rid INT AUTO_INCREMENT COMMENT '序号，自增作为主键',
                              rule_number INT COMMENT '规则编号',
-                             alarm_rule VARCHAR(20) COMMENT '预警规则描述',
+                             alarm_rule VARCHAR(255) COMMENT '预警规则描述',
                              battery_type VARCHAR(20) COMMENT '电池类型',
                              alarm_level INT COMMENT'警报等级',
                              PRIMARY KEY (rid)
@@ -56,31 +56,31 @@ VALUES ('mnopqr1234567892', 1003, '三元电池', 300, 98);
 -- 1. 三元电池 - 电压差报警（规则编号 1）
 INSERT INTO alarm_rules (rule_number, alarm_rule, battery_type, alarm_level) VALUES
                                                                                  (1, '5<=(Mx - Mi)', '三元电池', 0),
-                                                                                 (1, '3<=(Mx - Mi)<5', '三元电池', 1),
-                                                                                 (1, '1<=(Mx - Mi)<3', '三元电池', 2),
-                                                                                 (1, '0.6<=(Mx - Mi)<1', '三元电池', 3),
-                                                                                 (1, '0.2<=(Mx - Mi)<0.6', '三元电池', 4),
+                                                                                 (1, '3<=(Mx - Mi) && (Mx - Mi)<5', '三元电池', 1),
+                                                                                 (1, '1<=(Mx - Mi) && (Mx - Mi)<3', '三元电池', 2),
+                                                                                 (1, '0.6<=(Mx - Mi) && (Mx - Mi)<1', '三元电池', 3),
+                                                                                 (1, '0.2<=(Mx - Mi) && (Mx - Mi)<0.6', '三元电池', 4),
                                                                                  (1, '(Mx - Mi)<0.2', '三元电池', -1);
 
 -- 2. 铁锂电池 - 电压差报警（规则编号 1）
 INSERT INTO alarm_rules (rule_number, alarm_rule, battery_type, alarm_level) VALUES
                                                                                  (1, '2<=(Mx - Mi)', '铁锂电池', 0),
-                                                                                 (1, '1<=(Mx - Mi)<2', '铁锂电池', 1),
-                                                                                 (1, '0.7<=(Mx - Mi)<1', '铁锂电池', 2),
-                                                                                 (1, '0.4<=(Mx - Mi)<0.7', '铁锂电池', 3),
-                                                                                 (1, '0.2<=(Mx - Mi)<0.4', '铁锂电池', 4),
+                                                                                 (1, '1<=(Mx - Mi) && (Mx - Mi)<2', '铁锂电池', 1),
+                                                                                 (1, '0.7<=(Mx - Mi) && (Mx - Mi)<1', '铁锂电池', 2),
+                                                                                 (1, '0.4<=(Mx - Mi) && (Mx - Mi)<0.7', '铁锂电池', 3),
+                                                                                 (1, '0.2<=(Mx - Mi) && (Mx - Mi)<0.4', '铁锂电池', 4),
                                                                                  (1, '(Mx - Mi)<0.2', '铁锂电池', -1);
 
 -- 3. 三元电池 - 电流差报警（规则编号 2）
 INSERT INTO alarm_rules (rule_number, alarm_rule, battery_type, alarm_level) VALUES
                                                                                  (2, '3<=(Ix - Ii)', '三元电池', 0),
-                                                                                 (2, '1<=(Ix - Ii)<3', '三元电池', 1),
-                                                                                 (2, '0.2<=(Ix - Ii)<1', '三元电池', 2),
+                                                                                 (2, '1<=(Ix - Ii) && (Ix - Ii)<3', '三元电池', 1),
+                                                                                 (2, '0.2<=(Ix - Ii) && (Ix - Ii)<1', '三元电池', 2),
                                                                                  (2, '(Ix - Ii)<0.2', '三元电池', -1);
 
 -- 4. 铁锂电池 - 电流差报警（规则编号 2）
 INSERT INTO alarm_rules (rule_number, alarm_rule, battery_type, alarm_level) VALUES
                                                                                  (2, '1<=(Ix - Ii)', '铁锂电池', 0),
-                                                                                 (2, '0.5<=(Ix - Ii)<1', '铁锂电池', 1),
-                                                                                 (2, '0.2<=(Ix - Ii)<0.5', '铁锂电池', 2),
+                                                                                 (2, '0.5<=(Ix - Ii) && (Ix - Ii)<1', '铁锂电池', 1),
+                                                                                 (2, '0.2<=(Ix - Ii) && (Ix - Ii)<0.5', '铁锂电池', 2),
                                                                                  (2, '(Ix - Ii)<0.2', '铁锂电池', -1);

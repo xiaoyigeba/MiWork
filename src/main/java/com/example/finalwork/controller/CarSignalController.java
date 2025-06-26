@@ -23,6 +23,7 @@ public class CarSignalController {
     /**
      * POST /api/car-signals
      * 接口：上报/添加汽车信号状态
+     *
      * @param carSignal 请求体中的汽车信号数据
      * @return 响应实体
      */
@@ -49,6 +50,7 @@ public class CarSignalController {
     /**
      * GET /api/car-signals/query
      * 接口：根据 sid 查询汽车信号
+     *
      * @param sid 信号ID
      * @return 响应实体
      */
@@ -65,6 +67,7 @@ public class CarSignalController {
     /**
      * GET /api/car-signals
      * 接口：查询所有汽车信号
+     *
      * @return 响应实体列表
      */
     @GetMapping
@@ -76,6 +79,7 @@ public class CarSignalController {
     /**
      * GET /api/car-signals/by-frame/{frameNumber}
      * 接口：根据车架编号查询汽车信号
+     *
      * @param frameNumber 车架编号
      * @return 响应实体列表
      */
@@ -92,7 +96,8 @@ public class CarSignalController {
     /**
      * PUT /api/car-signals/{sid}
      * 接口：更新汽车信号数据
-     * @param sid 要更新的信号ID/规则编号
+     *
+     * @param sid       要更新的信号ID/规则编号
      * @param carSignal 请求体中包含更新数据的实体
      * @return 响应实体
      */
@@ -117,6 +122,7 @@ public class CarSignalController {
     /**
      * DELETE /api/car-signals/{sid}
      * 接口：删除汽车信号数据
+     *
      * @param sid 要删除的信号ID/规则编号
      * @return 响应实体
      */

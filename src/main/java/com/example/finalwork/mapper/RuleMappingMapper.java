@@ -6,6 +6,6 @@ import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface RuleMappingMapper {
-    @Select("Select rule_name from rules_mapping where rule_number = #{ruleNumber}")
+    @Select("SELECT rule_name AS ruleName FROM rules_mapping WHERE rule_number = #{ruleNumber}")
     String getRuleNameByRuleNumber(Integer ruleNumber);
 }

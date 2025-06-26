@@ -28,7 +28,7 @@ public class WarningController {
 
     /**
      * 根据新的 List<RequestItem> 结构计算预警等级。
-     *
+     * <p>
      * 请求示例:
      * [
      * {
@@ -46,7 +46,7 @@ public class WarningController {
      * "signal": "{\"Mx\":11.0,\"Mi\":9.6,\"Ix\":12.0,\"Ii\":11.7}"
      * }
      * ]
-     *
+     * <p>
      * 返回示例:
      * {
      * "status": 200,
@@ -88,10 +88,11 @@ public class WarningController {
             }
 
             try {
+
                 // 调用服务层进行警告计算
                 WarningResponsePart triggeredWarningsForItem = warningCalculationService.calculateWarnings(
                         item.getFrameNumber(),
-                        item.getRuleNumber(), // ruleNumber 可能是 null，服务层会处理
+                        item.getRuleNumber(),
                         item.getSignalData()
                 );
 

@@ -22,7 +22,6 @@ spring:
           min-idle: 0
           max-wait: 10000ms  # -1 ??????
   mybatis:
-    mapper-locations: classpath*:mapper/**/*.xml
     configuration:
       map-underscore-to-camel-case: true
 
